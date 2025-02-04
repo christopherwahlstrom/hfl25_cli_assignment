@@ -21,23 +21,21 @@ class ParkingSpaceRepository {
     }
   }
 
-  void update(String address, ParkingSpace updatedParkingSpace) {
-    var index = _parkingSpaces
-        .indexWhere((parkingSpace) => parkingSpace.address == address);
+  void update(int id, ParkingSpace updatedParkingSpace) {
+    var index = _parkingSpaces.indexWhere((parkingSpace) => parkingSpace.id == id);
     if (index != -1) {
       _parkingSpaces[index] = updatedParkingSpace;
     } else {
-      throw Exception('Parking space with address $address not found');
+      throw Exception('Parking space with ID $id not found');
     }
   }
 
   void delete(String address) {
-    var index = _parkingSpaces
-        .indexWhere((parkingSpace) => parkingSpace.address == address);
+    var index = _parkingSpaces.indexWhere((parkingSpace) => parkingSpace.address == address);
     if (index != -1) {
       _parkingSpaces.removeAt(index);
     } else {
       throw Exception('Parking space with address $address not found');
-      }
+    }
   }
 }

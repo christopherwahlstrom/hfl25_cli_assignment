@@ -1,28 +1,33 @@
 import 'dart:io';
 import 'package:cli_assignment/repositories/parkingspace.dart';
+import 'package:cli_assignment/models/models.dart';
 
 void handleParkingSpaceMenu(ParkingSpaceRepository parkingSpaceRepository) {
   while (true) {
     print('Parking Space Menu');
     print('1. View Parking Spaces');
     print('2. Add Parking Space');
-    print('3. Remove Parking Space');
-    print('4. Exit');
+    print('3. Update Parking Space');
+    print('4. Remove Parking Space');
+    print('5. Back to Main Menu');
 
     stdout.write('Please select an option: ');
-    String? input = stdin.readLineSync();
+    var choice = stdin.readLineSync();
 
-    switch (input) {
+    switch (choice) {
       case '1':
-        viewParkingSpaces();
+        viewParkingSpaces(parkingSpaceRepository);
         break;
       case '2':
-        addParkingSpace();
+        addParkingSpace(parkingSpaceRepository);
         break;
       case '3':
-        removeParkingSpace();
+        updateParkingSpace(parkingSpaceRepository);
         break;
       case '4':
+        removeParkingSpace(parkingSpaceRepository);
+        break;
+      case '5':
         return;
       default:
         print('Invalid option, please try again.');
@@ -30,17 +35,79 @@ void handleParkingSpaceMenu(ParkingSpaceRepository parkingSpaceRepository) {
   }
 }
 
-void viewParkingSpaces() {
-  // Implement the logic to view parking spaces
-  print('Viewing parking spaces...');
+void viewParkingSpaces(ParkingSpaceRepository parkingSpaceRepository) {
+  var parkingSpaces = parkingSpaceRepository.getAll();
+  if (parkingSpaces.isEmpty) {
+    print('No parking spaces available.');
+  } else {
+    for (var parkingSpace in parkingSpaces) {
+      print('ID: ${parkingSpace.id}, Address: ${parkingSpace.address}, Price per Hour: ${parkingSpace.pricePerHour}');
+    }
+  }
 }
 
-void addParkingSpace() {
-  // Implement the logic to add a parking space
-  print('Adding a parking space...');
+void addParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
+  stdout.write('Enter ID of the parking space: ');
+  var idInput = stdin.readLineSync();
+  stdout.write('Enter address: ');
+  var address = stdin.readLineSync();
+  stdout.write('Enter hourly rate: ');
+  var priceInput = stdin.readLineSync();
+
+  if (idInput != null && address != null && priceInput != null) {
+    try {
+      var id = int.parse(idInput);
+      var pricePerHour = double.parse(priceInput);
+      var parkingSpace = ParkingSpace(id: id, address: address, pricePerHour: pricePerHour);
+      parkingSpaceRepository.add(parkingSpace);
+      print('Parking space added successfully.');
+    } catch (e) {
+      print('Invalid input. Please enter valid numbers for ID and hourly rate.');
+    }
+  } else {
+    print('Invalid input. Please try again.');
+  }
 }
 
-void removeParkingSpace() {
-  // Implement the logic to remove a parking space
-  print('Removing a parking space...');
+void updateParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
+  stdout.write('Enter the ID of the parking space to update: ');
+  var idInput = stdin.readLineSync();
+  var parkingSpace = parkingSpaceRepository.getById(int.parse(idInput!));
+
+  if (parkingSpace != null) {
+    stdout.write('Enter new address: ');
+    var newAddress = stdin.readLineSync();
+    stdout.write('Enter new hourly rate: ');
+    var newPriceInput = stdin.readLineSync();
+
+    if (newAddress != null && newPriceInput != null) {
+      try {
+        var newPricePerHour = double.parse(newPriceInput);
+        var updatedParkingSpace = ParkingSpace(id: parkingSpace.id, address: newAddress, pricePerHour: newPricePerHour);
+        parkingSpaceRepository.update(parkingSpace.id, updatedParkingSpace);
+        print('Parking space updated successfully.');
+      } catch (e) {
+        print('Invalid input. Please enter a valid number for the hourly rate.');
+      }
+    } else {
+      print('Invalid input. Please try again.');
+    }
+  } else {
+    print('Parking space not found.');
+  }
+}
+
+void removeParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
+  stdout.write('Enter the address of the parking space to remove: ');
+  var address = stdin.readLineSync();
+  if (address != null) {
+    try {
+      parkingSpaceRepository.delete(address);
+      print('Parking space removed successfully.');
+    } catch (e) {
+      print(e);
+    }
+  } else {
+    print('Invalid input. Please try again.');
+  }
 }

@@ -21,23 +21,23 @@ class VehicleRepository {
     }
   }
 
-  void update(String regNr, Vehicle updatedVehicle) {
+  void update(String registrationNumber, Vehicle updatedVehicle) {
     var index =
-        _vehicles.indexWhere((vehicle) => vehicle.registrationNumber == regNr);
+        _vehicles.indexWhere((vehicle) => vehicle.registrationNumber == registrationNumber);
     if (index != -1) {
       _vehicles[index] = updatedVehicle;
     } else {
-      throw Exception('Vehicle with registration number $regNr not found');
+      throw Exception('Vehicle with registration number $registrationNumber not found');
     }
   }
 
-  void delete(String regNr) {
+  void delete(String registrationNumber) {
     var index =
-        _vehicles.indexWhere((vehicle) => vehicle.registrationNumber == regNr);
+        _vehicles.indexWhere((vehicle) => vehicle.registrationNumber == registrationNumber);
     if (index != -1) {
       _vehicles.removeAt(index);
     } else {
-      throw Exception('Vehicle with registration number $regNr not found');
+      throw Exception('Vehicle with registration number $registrationNumber not found');
     }
   }
 }

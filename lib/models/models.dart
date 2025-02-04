@@ -12,14 +12,6 @@ class Vehicle {
   Vehicle({required this.registrationNumber, required this.type, required this.owner});
 }
 
-class ParkingSpace {
-  int id;
-  String address;
-  double pricePerHour;
-
-  ParkingSpace({required this.id, required this.address, required this.pricePerHour});
-}
-
 class Parking {
   Vehicle vehicle;
   ParkingSpace parkingSpace;
@@ -27,4 +19,12 @@ class Parking {
   DateTime endTime;
 
   Parking({required this.vehicle, required this.parkingSpace, required this.startTime, required this.endTime});
+}
+
+class ParkingSpace {
+  String id;
+  String address;
+  double pricePerHour;
+
+  ParkingSpace({required this.id, required this.address, required this.pricePerHour});
 }

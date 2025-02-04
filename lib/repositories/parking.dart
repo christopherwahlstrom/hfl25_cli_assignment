@@ -11,34 +11,31 @@ class ParkingRepository {
     return _parkings;
   }
 
-  ParkingSpace? getByVehicleRegNr(String regNr) {
+  Parking? getByVehicleRegNr(String registationNumber) {
     try {
-      return _parkings
-          .firstWhere(
-            (parking) => parking.vehicle.registrationNumber == regNr,
-          )
-          .parkingSpace;
+      return _parkings.firstWhere(
+        (parking) => parking.vehicle.registrationNumber == registationNumber,
+      );
     } catch (e) {
       return null;
     }
   }
 
-  void update(String regNr, Parking updatedParking) {
-    var index = _parkings
-        .indexWhere((parking) => parking.vehicle.registrationNumber == regNr);
-        if (index != -1) {
-          _parkings[index] = updatedParking;
-        } else {
-          throw Exception('Parking with vehicle registration number $regNr not found');
-        }
+  void update(String registrationNumber, Parking updatedParking) {
+    var index = _parkings.indexWhere((parking) => parking.vehicle.registrationNumber == registrationNumber);
+    if (index != -1) {
+      _parkings[index] = updatedParking;
+    } else {
+      throw Exception('Parking with ID $registrationNumber); not found');
+    }
   }
 
-  void delete(String regNr) {
-    var index = _parkings.indexWhere((parking) => parking.vehicle.registrationNumber == regNr);
-    if(index != -1) {
+  void delete(String registrationNumber) {
+    var index = _parkings.indexWhere((parking) => parking.vehicle == registrationNumber);
+    if (index != -1) {
       _parkings.removeAt(index);
     } else {
-      throw Exception('Parking with vehicle registration number $regNr not found');
+      throw Exception('Parking with ID $registrationNumber); not found');
     }
   }
 }

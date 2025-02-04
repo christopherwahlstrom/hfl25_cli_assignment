@@ -48,15 +48,14 @@ void viewParkingSpaces(ParkingSpaceRepository parkingSpaceRepository) {
 
 void addParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
   stdout.write('Enter ID of the parking space: ');
-  var idInput = stdin.readLineSync();
+  var id = stdin.readLineSync();
   stdout.write('Enter address: ');
   var address = stdin.readLineSync();
   stdout.write('Enter hourly rate: ');
   var priceInput = stdin.readLineSync();
 
-  if (idInput != null && address != null && priceInput != null) {
+  if (id != null && address != null && priceInput != null) {
     try {
-      var id = int.parse(idInput);
       var pricePerHour = double.parse(priceInput);
       var parkingSpace = ParkingSpace(id: id, address: address, pricePerHour: pricePerHour);
       parkingSpaceRepository.add(parkingSpace);
@@ -71,8 +70,8 @@ void addParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
 
 void updateParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
   stdout.write('Enter the ID of the parking space to update: ');
-  var idInput = stdin.readLineSync();
-  var parkingSpace = parkingSpaceRepository.getById(int.parse(idInput!));
+  var id = stdin.readLineSync();
+  var parkingSpace = parkingSpaceRepository.getById(id!);
 
   if (parkingSpace != null) {
     stdout.write('Enter new address: ');
@@ -98,16 +97,8 @@ void updateParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
 }
 
 void removeParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
-  stdout.write('Enter the address of the parking space to remove: ');
-  var address = stdin.readLineSync();
-  if (address != null) {
-    try {
-      parkingSpaceRepository.delete(address);
-      print('Parking space removed successfully.');
-    } catch (e) {
-      print(e);
-    }
-  } else {
-    print('Invalid input. Please try again.');
-  }
+  stdout.write('Enter the ID of the parking space to remove: ');
+  var id = stdin.readLineSync();
+  parkingSpaceRepository.delete(id!);
+  print('Parking space removed successfully.');
 }

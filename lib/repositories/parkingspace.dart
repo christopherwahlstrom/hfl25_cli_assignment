@@ -11,7 +11,7 @@ class ParkingSpaceRepository {
     return _parkingSpaces;
   }
 
-  ParkingSpace? getById(int id) {
+  ParkingSpace? getById(String id) {
     try {
       return _parkingSpaces.firstWhere(
         (parkingSpace) => parkingSpace.id == id,
@@ -21,7 +21,7 @@ class ParkingSpaceRepository {
     }
   }
 
-  void update(int id, ParkingSpace updatedParkingSpace) {
+  void update(String id, ParkingSpace updatedParkingSpace) {
     var index = _parkingSpaces.indexWhere((parkingSpace) => parkingSpace.id == id);
     if (index != -1) {
       _parkingSpaces[index] = updatedParkingSpace;
@@ -30,12 +30,12 @@ class ParkingSpaceRepository {
     }
   }
 
-  void delete(String address) {
-    var index = _parkingSpaces.indexWhere((parkingSpace) => parkingSpace.address == address);
+  void delete(String id) {
+    var index = _parkingSpaces.indexWhere((parkingSpace) => parkingSpace.id == id);
     if (index != -1) {
       _parkingSpaces.removeAt(index);
     } else {
-      throw Exception('Parking space with address $address not found');
+      throw Exception('Parking space with address $id not found');
     }
   }
 }

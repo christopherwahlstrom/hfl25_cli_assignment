@@ -100,7 +100,7 @@ void updateParking(ParkingRepository parkingRepository) {
   var parking = parkingRepository.getByVehicleRegNr(registrationNumber);
 
   if (parking != null) {
-    stdout.write('Ange nytt slutdatum (yyyy-mm-dd hh:mm:ss): ');
+    stdout.write('Ange nytt sluttid ("YY:MM:DD ,  HH:MM")): ');
     var endTimeInput = stdin.readLineSync();
     if (endTimeInput != null) {
       try {

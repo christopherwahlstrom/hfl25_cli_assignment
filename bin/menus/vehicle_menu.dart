@@ -4,12 +4,12 @@ import 'package:cli_assignment/repositories/vehicle.dart';
 
 void handleVehicleMenu(VehicleRepository vehicleRepository) {
   while (true) {
-    print('1. Add Vehicle');
-    print('2. View Vehicles');
-    print('3. Update Vehicle');
-    print('4. Delete Vehicle');
-    print('5. Back to Main Menu');
-    stdout.write('Choose an option: ');
+    print('1. Lägg till fordon');
+    print('2. Visa alla fordon');
+    print('3. Uppdatera fordon');
+    print('4. Ta bort fordon');
+    print('5. Tillbaka till huvudmenyn');
+    stdout.write('Välj ett alternativ: ');
     var choice = stdin.readLineSync();
 
     switch (choice) {
@@ -28,17 +28,17 @@ void handleVehicleMenu(VehicleRepository vehicleRepository) {
       case '5':
         return;
       default:
-        print('Invalid option. Please try again.');
+        print('Felaktigt val, försök igen.');
     }
   }
 }
 
 void addVehicle(VehicleRepository vehicleRepository) {
-  stdout.write('Enter registration number: ');
+  stdout.write('Skriv in Registrerings nummer: ');
   var registrationNumber = stdin.readLineSync();
-  stdout.write('Enter type: ');
+  stdout.write('Skriv in fordonstyp (Ex. Bil , Motorcykel): ');
   var type = stdin.readLineSync();
-  stdout.write('Enter owner name: ');
+  stdout.write('Skriv in ägarens namn: ');
   var ownerName = stdin.readLineSync();
   var owner = Person(name: ownerName ?? '', personalNumber: '');
 
@@ -49,32 +49,32 @@ void addVehicle(VehicleRepository vehicleRepository) {
       owner: owner,
     );
     vehicleRepository.add(vehicle);
-    print('Vehicle added successfully.');
+    print('Fordon tillagt.');
   } else {
-    print('Invalid input. Please try again.');
+    print('Felaktigt val. Vänligen försök igen.');
   }
 }
 
 void viewVehicles(VehicleRepository vehicleRepository) {
   var vehicles = vehicleRepository.getAll();
   if (vehicles.isEmpty) {
-    print('No vehicles available.');
+    print('Inga fordon är tillgängliga.');
   } else {
     for (var vehicle in vehicles) {
-      print('Registration Number: ${vehicle.registrationNumber}, Type: ${vehicle.type}, Owner: ${vehicle.owner.name}');
+      print('Registrerings nummer: ${vehicle.registrationNumber}, Fordons typ: ${vehicle.type}, Ägare: ${vehicle.owner.name}');
     }
   }
 }
 
 void updateVehicle(VehicleRepository vehicleRepository) {
-  stdout.write('Enter the registration number of the vehicle to update: ');
+  stdout.write('Skriv in fordonets registerings nummer för att uppdatera: ');
   var registrationNumber = stdin.readLineSync();
   var vehicle = vehicleRepository.getByRegNr(registrationNumber!);
 
   if (vehicle != null) {
-    stdout.write('Enter new type: ');
+    stdout.write('Skriv in nytt fordonsval: ');
     var newType = stdin.readLineSync();
-    stdout.write('Enter new owner name: ');
+    stdout.write('Skriv i ny ägare: ');
     var newOwnerName = stdin.readLineSync();
     var newOwner = Person(name: newOwnerName ?? '', personalNumber: '');
 
@@ -82,18 +82,18 @@ void updateVehicle(VehicleRepository vehicleRepository) {
       vehicle.type = newType;
       vehicle.owner = newOwner;
       vehicleRepository.update(registrationNumber, vehicle);
-      print('Vehicle updated successfully.');
+      print('Fordonet har framgångsrikt uppdaterats.');
     } else {
-      print('Invalid input. Please try again.');
+      print('Felaktig inmatning. Vänligen försök igen.');
     }
   } else {
-    print('Vehicle not found.');
+    print('Fordonet har uppdaterats.');
   }
 }
 
 void deleteVehicle(VehicleRepository vehicleRepository) {
-  stdout.write('Enter the registration number of the vehicle to delete: ');
+  stdout.write('Skriv in fordonets registreringsnummer för att radera: ');
   var registrationNumber = stdin.readLineSync();
   vehicleRepository.delete(registrationNumber!);
-  print('Vehicle deleted successfully.');
+  print('Fordonet är raderat.');
 }

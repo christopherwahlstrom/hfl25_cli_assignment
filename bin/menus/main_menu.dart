@@ -17,9 +17,9 @@ class MainMenu {
   void start() {
     while (true) {
       print('1. Hantera Person');
-      print('2. Hantera Vehicle');
-      print('3. Hantera ParkingSpace');
-      print('4. Hantera Parking');
+      print('2. Hantera Fordon');
+      print('3. Hantera Parkingsplats');
+      print('4. Hantera Parkering');
       print('5. Avsluta');
       stdout.write('Välj ett alternativ: ');
       var choice = stdin.readLineSync();

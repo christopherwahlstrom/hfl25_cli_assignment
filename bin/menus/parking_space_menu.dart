@@ -4,14 +4,14 @@ import 'package:cli_assignment/models/models.dart';
 
 void handleParkingSpaceMenu(ParkingSpaceRepository parkingSpaceRepository) {
   while (true) {
-    print('Parking Space Menu');
-    print('1. View Parking Spaces');
-    print('2. Add Parking Space');
-    print('3. Update Parking Space');
-    print('4. Remove Parking Space');
-    print('5. Back to Main Menu');
+    print('Parkeringsplats meny');
+    print('1. Visa parkeringsplatser');
+    print('2. Lägg till parkeringsplats');
+    print('3. Uppdatera parkeringsplats');
+    print('4. Ta bort parkeringsplats');
+    print('5. Tillbaka till huvudmenyn');
 
-    stdout.write('Please select an option: ');
+    stdout.write('Välj ett alternativ: ');
     var choice = stdin.readLineSync();
 
     switch (choice) {
@@ -30,7 +30,7 @@ void handleParkingSpaceMenu(ParkingSpaceRepository parkingSpaceRepository) {
       case '5':
         return;
       default:
-        print('Invalid option, please try again.');
+        print('Felaktigt val , vänligen försök igen.');
     }
   }
 }
@@ -38,20 +38,20 @@ void handleParkingSpaceMenu(ParkingSpaceRepository parkingSpaceRepository) {
 void viewParkingSpaces(ParkingSpaceRepository parkingSpaceRepository) {
   var parkingSpaces = parkingSpaceRepository.getAll();
   if (parkingSpaces.isEmpty) {
-    print('No parking spaces available.');
+    print('Inga parkeringsplatser är lediga.');
   } else {
     for (var parkingSpace in parkingSpaces) {
-      print('ID: ${parkingSpace.id}, Address: ${parkingSpace.address}, Price per Hour: ${parkingSpace.pricePerHour}');
+      print('ID: ${parkingSpace.id}, Adress: ${parkingSpace.address}, Pris per timme: ${parkingSpace.pricePerHour}');
     }
   }
 }
 
 void addParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
-  stdout.write('Enter ID of the parking space: ');
+  stdout.write('Skriv in parkerings platsens ID: ');
   var id = stdin.readLineSync();
-  stdout.write('Enter address: ');
+  stdout.write('Skriv in adress: ');
   var address = stdin.readLineSync();
-  stdout.write('Enter hourly rate: ');
+  stdout.write('Skriv in tim kostnad: ');
   var priceInput = stdin.readLineSync();
 
   if (id != null && address != null && priceInput != null) {
@@ -59,24 +59,24 @@ void addParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
       var pricePerHour = double.parse(priceInput);
       var parkingSpace = ParkingSpace(id: id, address: address, pricePerHour: pricePerHour);
       parkingSpaceRepository.add(parkingSpace);
-      print('Parking space added successfully.');
+      print('En Parkeringsplats har framgångsrikt lagrats.');
     } catch (e) {
-      print('Invalid input. Please enter valid numbers for ID and hourly rate.');
+      print('Felaktig inmatning. Var vänlig skriv in giltiga nummer och en tim kostnad.');
     }
   } else {
-    print('Invalid input. Please try again.');
+    print('Felaktig inmatning. Var vänlig försök igen.');
   }
 }
 
 void updateParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
-  stdout.write('Enter the ID of the parking space to update: ');
+  stdout.write('Skriv in ID för parkerings plats för att uppdatera parkeringsplats: ');
   var id = stdin.readLineSync();
   var parkingSpace = parkingSpaceRepository.getById(id!);
 
   if (parkingSpace != null) {
-    stdout.write('Enter new address: ');
+    stdout.write('Skriv in ny adress: ');
     var newAddress = stdin.readLineSync();
-    stdout.write('Enter new hourly rate: ');
+    stdout.write('Skriv in tim kostnad: ');
     var newPriceInput = stdin.readLineSync();
 
     if (newAddress != null && newPriceInput != null) {
@@ -84,21 +84,21 @@ void updateParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
         var newPricePerHour = double.parse(newPriceInput);
         var updatedParkingSpace = ParkingSpace(id: parkingSpace.id, address: newAddress, pricePerHour: newPricePerHour);
         parkingSpaceRepository.update(parkingSpace.id, updatedParkingSpace);
-        print('Parking space updated successfully.');
+        print('Parkeringsplats är uppdaterad.');
       } catch (e) {
-        print('Invalid input. Please enter a valid number for the hourly rate.');
+        print('Felaktig inmatning. Vänligen skriv in ett gilltigt nummer.');
       }
     } else {
-      print('Invalid input. Please try again.');
+      print('Felaktig inmatning. Försök igen.');
     }
   } else {
-    print('Parking space not found.');
+    print('Parkingeringsplatsen hittades inte.');
   }
 }
 
 void removeParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
-  stdout.write('Enter the ID of the parking space to remove: ');
+  stdout.write('Skriv in ID för parkeringsplats: ');
   var id = stdin.readLineSync();
   parkingSpaceRepository.delete(id!);
-  print('Parking space removed successfully.');
+  print('Parkeringen togs bort framgångsrikt.');
 }

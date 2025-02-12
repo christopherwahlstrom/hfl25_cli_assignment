@@ -13,7 +13,8 @@ void handleParkingMenu(
     print('2. Visa alla Parkeringar');
     print('3. Uppdatera Parkering');
     print('4. Ta bort Parkering');
-    print('5. Tillbaka till huvudmenyn');
+    print('5. Beräkna kostnad för Parkering');
+    print('6. Tillbaka till huvudmenyn');
     stdout.write('Välj ett alternativ: ');
     var choice = stdin.readLineSync();
 
@@ -32,6 +33,8 @@ void handleParkingMenu(
         deleteParking(parkingRepository);
         break;
       case '5':
+        calculateParkingCost(parkingRepository);
+      case '6':
         return;
       default:
         print('Ogiltigt val, försök igen.');
@@ -124,4 +127,21 @@ void deleteParking(ParkingRepository parkingRepository) {
   var registrationNumber = stdin.readLineSync();
   parkingRepository.delete(registrationNumber!);
   print('Parkering borttagen.');
+}
+
+void calculateParkingCost(ParkingRepository parkingRepository) {
+  stdout.write('Ange registreringsnummer för fordonet som är parkerat: ');
+  var registrationNumber = stdin.readLineSync();
+  if (registrationNumber == null || registrationNumber.isEmpty) {
+    print('Registreringsnummer får inte vara tomt.');
+    return;
+  }
+  var parking = parkingRepository.getByVehicleRegNr(registrationNumber);
+
+  if (parking != null) {
+    var cost = parking.calculateCost();
+    print('Kostnaden för parkeringen är: $cost SEK');
+  } else {
+    print('Parkering ej funnen.');
+  }
 }

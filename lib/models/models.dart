@@ -9,7 +9,10 @@ class Vehicle {
   String type;
   Person owner;
 
-  Vehicle({required this.registrationNumber, required this.type, required this.owner});
+  Vehicle(
+      {required this.registrationNumber,
+      required this.type,
+      required this.owner});
 }
 
 class Parking {
@@ -18,7 +21,19 @@ class Parking {
   DateTime startTime;
   DateTime endTime;
 
-  Parking({required this.vehicle, required this.parkingSpace, required this.startTime, required this.endTime});
+  Parking(
+      {required this.vehicle,
+      required this.parkingSpace,
+      required this.startTime,
+      required this.endTime});
+
+  double calculateCost() {
+    if (endTime == null) {
+      return 0.0; // Parkering är aktiv
+    }
+    final duration = endTime!.difference(startTime).inHours;
+    return duration * parkingSpace.pricePerHour;
+  }
 }
 
 class ParkingSpace {
@@ -26,5 +41,6 @@ class ParkingSpace {
   String address;
   double pricePerHour;
 
-  ParkingSpace({required this.id, required this.address, required this.pricePerHour});
+  ParkingSpace(
+      {required this.id, required this.address, required this.pricePerHour});
 }

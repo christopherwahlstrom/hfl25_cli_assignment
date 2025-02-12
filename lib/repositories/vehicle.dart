@@ -21,6 +21,10 @@ class VehicleRepository {
     }
   }
 
+  List<Vehicle> getByOwner(String ownerName) {
+    return _vehicles.where((vehicle) => vehicle.owner.name == ownerName).toList();
+  }
+
   void update(String registrationNumber, Vehicle updatedVehicle) {
     var index =
         _vehicles.indexWhere((vehicle) => vehicle.registrationNumber == registrationNumber);

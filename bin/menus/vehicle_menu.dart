@@ -8,7 +8,8 @@ void handleVehicleMenu(VehicleRepository vehicleRepository) {
     print('2. Visa alla fordon');
     print('3. Uppdatera fordon');
     print('4. Ta bort fordon');
-    print('5. Tillbaka till huvudmenyn');
+    print('5. Sök efter fordon');
+    print('6. Tillbaka till huvudmenyn');
     stdout.write('Välj ett alternativ: ');
     var choice = stdin.readLineSync();
 
@@ -26,6 +27,9 @@ void handleVehicleMenu(VehicleRepository vehicleRepository) {
         deleteVehicle(vehicleRepository);
         break;
       case '5':
+        searchVehicleByOwner(vehicleRepository);
+        break;
+      case '6':
         return;
       default:
         print('Felaktigt val, försök igen.');
@@ -96,4 +100,21 @@ void deleteVehicle(VehicleRepository vehicleRepository) {
   var registrationNumber = stdin.readLineSync();
   vehicleRepository.delete(registrationNumber!);
   print('Fordonet är raderat.');
+}
+
+void searchVehicleByOwner(VehicleRepository vehicleRepository) {
+  stdout.write('Ange ägarens namn: ');
+  var owner = stdin.readLineSync();
+  if (owner == null || owner.isEmpty) {
+    print('Ägarens namn får inte vara tomt.');
+    return;
+  }
+  var vehicles = vehicleRepository.getByOwner(owner);
+  if (vehicles.isEmpty) {
+    print('Inga fordon funna för ägaren $owner.');
+  } else {
+    for (var vehicle in vehicles) {
+      print('Registreringsnummer: ${vehicle.registrationNumber}, Typ: ${vehicle.type}, Ägare: ${vehicle.owner.name}');
+    }
+  }
 }

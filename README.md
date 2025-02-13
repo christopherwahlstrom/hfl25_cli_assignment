@@ -1,23 +1,7 @@
-Parkeringsapp - Uppgift 1: Grundläggande
-Datamodeller och CLI
-Introduktion
-I denna första uppgift ska ni börja utveckla grunden för en parkeringsapplikation. Ni ska skapa de
-grundläggande datamodellerna och ett enkelt CLI (program som körs från terminalen) för att hantera dessa
-modeller.
-Mål
-Skapa grundläggande datamodeller för parkeringsapplikationen
-Implementera ett enkelt CLI för att hantera dessa modeller
-Börja tänka på hur olika delar av applikationen interagerar med varandra
-Resurser
-Börja här!
-Fippla lite här!
-Kom igång här!
-Börja koda ditt CLI med dart:io!
-Uppmaning
-Gör inte allt på en och samma gång! Välj en sak i taget och försök ta kortaste möjliga steget till att lösa
-det problemet. Kursen förväntar sig mycket självstudier av er så gör en plan och försök följa den. Ni
-förväntas läsa en hel del dokumentation för att styra era beslut. Ta ett beslut, försök, testa, misslyckas,
-utvärdera, gör om, lyckas, gå vidare!
+Parkeringsapp -
+
+Uppgift 1: 
+
 Krav
 1. Datamodeller
 Skapa följande klasser i Dart:
@@ -41,6 +25,8 @@ Ansvarar för att lagra och hantera en samling av Vehicle-objekt
 Ansvarar för att lagra och hantera en samling av ParkingSpace-objekt
 4. ParkingRepository
 Ansvarar för att lagra och hantera en samling av Parking-objekt
+
+
 Varje repository-klass bör innehålla metoder för att lägga till, ta bort, uppdatera och hämta objekt. Exempel
 på metodnamn kan vara:
 add(item)

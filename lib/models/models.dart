@@ -28,10 +28,7 @@ class Parking {
       required this.endTime});
 
   double calculateCost() {
-    if (endTime == null) {
-      return 0.0; // Parkering är aktiv
-    }
-    final duration = endTime!.difference(startTime).inHours;
+    final duration = endTime.difference(startTime).inHours;
     return duration * parkingSpace.pricePerHour;
   }
 }

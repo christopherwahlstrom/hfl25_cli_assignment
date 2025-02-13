@@ -51,7 +51,7 @@ void addParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
   var id = stdin.readLineSync();
   stdout.write('Skriv in adress: ');
   var address = stdin.readLineSync();
-  stdout.write('Skriv in tim kostnad: ');
+  stdout.write('Skriv in tim kostnad (SEK): ');
   var priceInput = stdin.readLineSync();
 
   if (id != null && address != null && priceInput != null) {

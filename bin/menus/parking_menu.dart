@@ -45,17 +45,16 @@ void handleParkingMenu(
 void createParking(
     ParkingRepository parkingRepository,
     VehicleRepository vehicleRepository,
-    ParkingSpaceRepository parkingSpaceRepository) async {
+    ParkingSpaceRepository parkingSpaceRepository) {
   stdout.write('Ange fordonets registreringsnummer: ');
   var registrationNumber = stdin.readLineSync();
   if (registrationNumber == null || registrationNumber.isEmpty) {
     print('Registreringsnummer får inte vara tomt.');
     return;
   }
-  var vehicle = await vehicleRepository.getByRegNr(registrationNumber);
+  var vehicle = vehicleRepository.getByRegNr(registrationNumber);
   if (vehicle == null) {
-    print(
-        'Fordonet med registreringsnummer $registrationNumber hittades inte.');
+    print('Fordonet med registreringsnummer $registrationNumber hittades inte.');
     return;
   }
 
@@ -65,7 +64,7 @@ void createParking(
     print('Parkeringsplatsens ID får inte vara tomt.');
     return;
   }
-  var parkingSpace = await parkingSpaceRepository.getById(parkingSpaceId);
+  var parkingSpace = parkingSpaceRepository.getById(parkingSpaceId);
   if (parkingSpace == null) {
     print('Parkeringsplatsen med ID $parkingSpaceId hittades inte.');
     return;
@@ -77,8 +76,12 @@ void createParking(
     startTime: DateTime.now(),
     endTime: DateTime.now().add(Duration(hours: 1)),
   );
-  parkingRepository.add(parking);
-  print('Parkering skapad.');
+  if (parking.isValid()) {
+    parkingRepository.add(parking);
+    print('Parkering skapad.');
+  } else {
+    print('Ogiltig inmatning. Kontrollera att alla fält är korrekt ifyllda.');
+  }
 }
 
 void showAllParkings(ParkingRepository parkingRepository) {

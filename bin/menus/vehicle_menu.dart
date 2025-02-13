@@ -37,25 +37,27 @@ void handleVehicleMenu(VehicleRepository vehicleRepository) {
   }
 }
 
-void addVehicle(VehicleRepository vehicleRepository) {
+void addVehicle(VehicleRepository vehicleRepository) async {
   stdout.write('Skriv in Registrerings nummer: ');
   var registrationNumber = stdin.readLineSync();
   stdout.write('Skriv in fordonstyp (Ex. Bil , Motorcykel): ');
   var type = stdin.readLineSync();
   stdout.write('Skriv in ägarens namn: ');
   var ownerName = stdin.readLineSync();
-  var owner = Person(name: ownerName ?? '', personalNumber: '');
+  stdout.write('Skriv in ägarens personnummer: ');
+  var ownerPersonalNumber = stdin.readLineSync();
 
-  if (registrationNumber != null && type != null && ownerName != null) {
-    var vehicle = Vehicle(
-      registrationNumber: registrationNumber,
-      type: type,
-      owner: owner,
-    );
-    vehicleRepository.add(vehicle);
-    print('Fordon tillagt.');
+  if (registrationNumber != null && type != null && ownerName != null && ownerPersonalNumber != null) {
+    var owner = Person(name: ownerName, personalNumber: ownerPersonalNumber);
+    var vehicle = Vehicle(registrationNumber: registrationNumber, type: type, owner: owner);
+    if (vehicle.isValid()) {
+      vehicleRepository.add(vehicle);
+      print('Fordon tillagt.');
+    } else {
+      print('Ogiltig inmatning. Kontrollera att alla fält är korrekt ifyllda.');
+    }
   } else {
-    print('Felaktigt val. Vänligen försök igen.');
+    print('Ogiltig input.');
   }
 }
 

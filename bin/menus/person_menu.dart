@@ -42,8 +42,12 @@ void createPerson(PersonRepository personRepository) {
 
   if (name != null && personalNumber != null) {
     var person = Person(name: name, personalNumber: personalNumber);
-    personRepository.add(person);
-    print('Person skapad.');
+    if (person.isValid()) {
+      personRepository.add(person);
+      print('Person skapad.');
+    } else {
+      print('Ogiltig inmatning. Kontrollera att namnet inte är tomt och att personnumret har rätt format 10siffor.');
+    }
   } else {
     print('Ogiltig input.');
   }

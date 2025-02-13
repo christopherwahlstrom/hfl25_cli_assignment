@@ -59,8 +59,8 @@ void addVehicle(VehicleRepository vehicleRepository) {
   }
 }
 
-void viewVehicles(VehicleRepository vehicleRepository) {
-  var vehicles = vehicleRepository.getAll();
+void viewVehicles(VehicleRepository vehicleRepository) async {
+  var vehicles = await vehicleRepository.getAll();
   if (vehicles.isEmpty) {
     print('Inga fordon är tillgängliga.');
   } else {
@@ -70,10 +70,10 @@ void viewVehicles(VehicleRepository vehicleRepository) {
   }
 }
 
-void updateVehicle(VehicleRepository vehicleRepository) {
+void updateVehicle(VehicleRepository vehicleRepository) async {
   stdout.write('Skriv in fordonets registerings nummer för att uppdatera: ');
   var registrationNumber = stdin.readLineSync();
-  var vehicle = vehicleRepository.getByRegNr(registrationNumber!);
+  var vehicle = await vehicleRepository.getByRegNr(registrationNumber!);
 
   if (vehicle != null) {
     stdout.write('Skriv in nytt fordonsval: ');
@@ -95,21 +95,21 @@ void updateVehicle(VehicleRepository vehicleRepository) {
   }
 }
 
-void deleteVehicle(VehicleRepository vehicleRepository) {
+void deleteVehicle(VehicleRepository vehicleRepository) async {
   stdout.write('Skriv in fordonets registreringsnummer för att radera: ');
   var registrationNumber = stdin.readLineSync();
-  vehicleRepository.delete(registrationNumber!);
+  await vehicleRepository.delete(registrationNumber!);
   print('Fordonet är raderat.');
 }
 
-void searchVehicleByOwner(VehicleRepository vehicleRepository) {
+void searchVehicleByOwner(VehicleRepository vehicleRepository) async {
   stdout.write('Ange ägarens namn: ');
   var owner = stdin.readLineSync();
   if (owner == null || owner.isEmpty) {
     print('Ägarens namn får inte vara tomt.');
     return;
   }
-  var vehicles = vehicleRepository.getByOwner(owner);
+  var vehicles = await vehicleRepository.getByOwner(owner);
   if (vehicles.isEmpty) {
     print('Inga fordon funna för ägaren $owner.');
   } else {

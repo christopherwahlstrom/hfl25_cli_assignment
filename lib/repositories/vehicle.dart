@@ -3,15 +3,15 @@ import '/models/models.dart';
 class VehicleRepository {
   final List<Vehicle> _vehicles = [];
 
-  Future<void> add(Vehicle vehicle) async {
+  void add(Vehicle vehicle) {
     _vehicles.add(vehicle);
   }
 
-  Future<List<Vehicle>> getAll() async {
+  List<Vehicle> getAll() {
     return _vehicles;
   }
 
-  Future<Vehicle?> getByRegNr(String regNr) async {
+  Vehicle? getByRegNr(String regNr) {
     try {
       return _vehicles.firstWhere(
         (vehicle) => vehicle.registrationNumber == regNr,
@@ -21,11 +21,11 @@ class VehicleRepository {
     }
   }
 
-  Future<List<Vehicle>> getByOwner(String ownerName) async {
+  List<Vehicle> getByOwner(String ownerName) {
     return _vehicles.where((vehicle) => vehicle.owner.name == ownerName).toList();
   }
 
-  Future<void> update(String registrationNumber, Vehicle updatedVehicle) async {
+  void update(String registrationNumber, Vehicle updatedVehicle) {
     var index =
         _vehicles.indexWhere((vehicle) => vehicle.registrationNumber == registrationNumber);
     if (index != -1) {
@@ -35,7 +35,7 @@ class VehicleRepository {
     }
   }
 
-  Future<void> delete(String registrationNumber) async {
+  void delete(String registrationNumber) {
     var index =
         _vehicles.indexWhere((vehicle) => vehicle.registrationNumber == registrationNumber);
     if (index != -1) {

@@ -3,15 +3,15 @@ import '/models/models.dart';
 class ParkingSpaceRepository {
   final List<ParkingSpace> _parkingSpaces = [];
 
-  Future<void> add(ParkingSpace parkingSpace) async {
+  void add(ParkingSpace parkingSpace) {
     _parkingSpaces.add(parkingSpace);
   }
 
-  Future<List<ParkingSpace>> getAll() async {
+  List<ParkingSpace> getAll() {
     return _parkingSpaces;
   }
 
-  Future<ParkingSpace?> getById(String id) async{
+  ParkingSpace? getById(String id) {
     try {
       return _parkingSpaces.firstWhere(
         (parkingSpace) => parkingSpace.id == id,
@@ -21,7 +21,7 @@ class ParkingSpaceRepository {
     }
   }
 
-  Future<void> update(String id, ParkingSpace updatedParkingSpace) async {
+  void update(String id, ParkingSpace updatedParkingSpace) {
     var index = _parkingSpaces.indexWhere((parkingSpace) => parkingSpace.id == id);
     if (index != -1) {
       _parkingSpaces[index] = updatedParkingSpace;
@@ -30,7 +30,7 @@ class ParkingSpaceRepository {
     }
   }
 
-  Future<void> delete(String id) async {
+  void delete(String id) {
     var index = _parkingSpaces.indexWhere((parkingSpace) => parkingSpace.id == id);
     if (index != -1) {
       _parkingSpaces.removeAt(index);

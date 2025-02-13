@@ -49,8 +49,8 @@ void createPerson(PersonRepository personRepository) {
   }
 }
 
-void showAllPersons(PersonRepository personRepository) async {
-  var persons = await personRepository.getAll();
+void showAllPersons(PersonRepository personRepository) {
+  var persons = personRepository.getAll();
   if (persons.isEmpty) {
     print('Inga personer funna.');
   } else {
@@ -60,10 +60,10 @@ void showAllPersons(PersonRepository personRepository) async {
   }
 }
 
-void updatePerson(PersonRepository personRepository) async {
+void updatePerson(PersonRepository personRepository) {
   stdout.write('Ange personnummer för personen som ska uppdateras: ');
   var personalNumber = stdin.readLineSync();
-  var person = await personRepository.getById(personalNumber!);
+  var person = personRepository.getById(personalNumber!);
 
   if (person != null) {
     stdout.write('Ange nytt namn: ');
@@ -80,9 +80,9 @@ void updatePerson(PersonRepository personRepository) async {
   }
 }
 
-void deletePerson(PersonRepository personRepository) async {
+void deletePerson(PersonRepository personRepository) {
   stdout.write('Ange personnummer för personen som ska tas bort: ');
   var personalNumber = stdin.readLineSync();
-  await personRepository.delete(personalNumber!);
+  personRepository.delete(personalNumber!);
   print('Person borttagen.');
 }

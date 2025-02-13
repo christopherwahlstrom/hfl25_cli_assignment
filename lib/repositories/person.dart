@@ -3,15 +3,15 @@ import '/models/models.dart';
 class PersonRepository {
   final List<Person> _persons = [];
 
-    Future<void> add(Person person) async {
+    void add(Person person) {
       _persons.add(person);
     }
 
-    Future<List<Person>> getAll() async {
+    List<Person> getAll() {
       return _persons;
     }
 
-    Future<Person?> getById(String personalNumber) async {
+    Person? getById(String personalNumber) {
       try {
         return _persons.firstWhere(
           (person) => person.personalNumber == personalNumber,
@@ -21,7 +21,7 @@ class PersonRepository {
       }
     }
 
-    Future<void> update(String personalNumber, Person updatedPerson) async {
+    void update(String personalNumber, Person updatedPerson) {
     var index = _persons.indexWhere((person) => person.personalNumber == personalNumber);
     if (index != -1) {
       _persons[index] = updatedPerson;
@@ -30,7 +30,7 @@ class PersonRepository {
     }
   }
 
-  Future<void> delete(String personalNumber) async {
+  void delete(String personalNumber) {
     var index = _persons.indexWhere((person) => person.personalNumber == personalNumber);
     if (index != -1) {
       _persons.removeAt(index);

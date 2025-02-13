@@ -35,8 +35,8 @@ void handleParkingSpaceMenu(ParkingSpaceRepository parkingSpaceRepository) {
   }
 }
 
-void viewParkingSpaces(ParkingSpaceRepository parkingSpaceRepository) {
-  var parkingSpaces = parkingSpaceRepository.getAll();
+void viewParkingSpaces(ParkingSpaceRepository parkingSpaceRepository) async {
+  var parkingSpaces = await parkingSpaceRepository.getAll();
   if (parkingSpaces.isEmpty) {
     print('Inga parkeringsplatser är lediga.');
   } else {
@@ -46,7 +46,7 @@ void viewParkingSpaces(ParkingSpaceRepository parkingSpaceRepository) {
   }
 }
 
-void addParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
+void addParkingSpace(ParkingSpaceRepository parkingSpaceRepository) async {
   stdout.write('Skriv in parkerings platsens ID: ');
   var id = stdin.readLineSync();
   stdout.write('Skriv in adress: ');
@@ -58,7 +58,7 @@ void addParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
     try {
       var pricePerHour = double.parse(priceInput);
       var parkingSpace = ParkingSpace(id: id, address: address, pricePerHour: pricePerHour);
-      parkingSpaceRepository.add(parkingSpace);
+      await parkingSpaceRepository.add(parkingSpace);
       print('En Parkeringsplats har framgångsrikt lagrats.');
     } catch (e) {
       print('Felaktig inmatning. Var vänlig skriv in giltiga nummer och en tim kostnad.');
@@ -68,10 +68,10 @@ void addParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
   }
 }
 
-void updateParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
+void updateParkingSpace(ParkingSpaceRepository parkingSpaceRepository) async {
   stdout.write('Skriv in ID för parkerings plats för att uppdatera parkeringsplats: ');
   var id = stdin.readLineSync();
-  var parkingSpace = parkingSpaceRepository.getById(id!);
+  var parkingSpace = await parkingSpaceRepository.getById(id!);
 
   if (parkingSpace != null) {
     stdout.write('Skriv in ny adress: ');
@@ -83,7 +83,7 @@ void updateParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
       try {
         var newPricePerHour = double.parse(newPriceInput);
         var updatedParkingSpace = ParkingSpace(id: parkingSpace.id, address: newAddress, pricePerHour: newPricePerHour);
-        parkingSpaceRepository.update(parkingSpace.id, updatedParkingSpace);
+        await parkingSpaceRepository.update(parkingSpace.id, updatedParkingSpace);
         print('Parkeringsplats är uppdaterad.');
       } catch (e) {
         print('Felaktig inmatning. Vänligen skriv in ett gilltigt nummer.');
@@ -96,9 +96,9 @@ void updateParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
   }
 }
 
-void removeParkingSpace(ParkingSpaceRepository parkingSpaceRepository) {
+void removeParkingSpace(ParkingSpaceRepository parkingSpaceRepository) async {
   stdout.write('Skriv in ID för parkeringsplats: ');
   var id = stdin.readLineSync();
-  parkingSpaceRepository.delete(id!);
+  await parkingSpaceRepository.delete(id!);
   print('Parkeringen togs bort framgångsrikt.');
 }
